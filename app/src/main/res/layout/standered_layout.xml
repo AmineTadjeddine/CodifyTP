@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tan_background"
+    android:orientation="vertical"
+    android:paddingTop="8dp" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Codify"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/algorithm_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="8dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        tools:text="Cesar's Algorithm" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"></FrameLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="4dp"
+            android:paddingBottom="150dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:paddingBottom="20dp"
+                android:text="Coding"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/original_to_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Your Text"
+                android:inputType="text"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/coding_key"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Your Key"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/codifyButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                android:text="Codify!"
+                android:textAlignment="center"
+
+                />
+
+            <TextView
+                android:id="@+id/coded_text"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="true"
+                android:textSize="25sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"></FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:paddingBottom="20dp"
+                android:text="deCoding"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/original_to_decode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Your Text"
+                android:inputType="text"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/decoding_key"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter Your Key"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/decodifyButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                android:text="deCodify!"
+                android:textAlignment="center"
+
+                />
+
+            <TextView
+                android:id="@+id/decoded_text"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="true"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
