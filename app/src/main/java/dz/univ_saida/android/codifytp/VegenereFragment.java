@@ -143,9 +143,10 @@ public class VegenereFragment extends Fragment {
         return codedText;
     }
 
-    private static String decrypt(String text, final String key) {
+    private static String decrypt(String text, String key) {
         String decodedText = "";
         text = text.toLowerCase();
+        key = key.toLowerCase();
 
         if (text.isEmpty()) {
             return text;
