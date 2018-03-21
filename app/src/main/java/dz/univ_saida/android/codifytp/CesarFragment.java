@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,14 +24,14 @@ public class CesarFragment extends Fragment {
     private static final char[] charactersArray = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
             'u', 'v', 'w', 'x', 'y', 'z'};
-    Button codifyButton;
-    EditText originalTextToCode;
-    EditText codingKey;
-    TextView codedText;
-    Button decodifyButton;
-    EditText originalTextToDecode;
-    EditText decodingKey;
-    TextView decodedText;
+    private Button codifyButton;
+    private EditText originalTextToCode;
+    private EditText codingKey;
+    private TextView codedText;
+    private Button decodifyButton;
+    private EditText originalTextToDecode;
+    private EditText decodingKey;
+    private TextView decodedText;
 
     public CesarFragment() {
         // Required empty public constructor
@@ -77,10 +78,12 @@ public class CesarFragment extends Fragment {
         for (int index = 0; index < text.length(); index++) {
             char aChar = text.charAt(index);
             boolean validChar = false;
-            for (int i = 0; i < charactersArray.length && !validChar; i++){
-                if (aChar == charactersArray[i]) { validChar = true; }
+            for (int i = 0; i < charactersArray.length && !validChar; i++) {
+                if (aChar == charactersArray[i]) {
+                    validChar = true;
+                }
             }
-            if (validChar){
+            if (validChar) {
                 codedText += decodify((((codify(aChar) + key) % 26) + 26) % 26);
             } else {
                 codedText += aChar;
@@ -139,9 +142,15 @@ public class CesarFragment extends Fragment {
         codifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!codingKey.getText().toString().isEmpty()) {
-                    codedText.setText(encrypt(originalTextToCode.getText().toString(), Integer.parseInt(codingKey.getText().toString())));
+                if (!originalTextToCode.getText().toString().isEmpty()) {
+                    if (!codingKey.getText().toString().isEmpty()) {
+                        codedText.setText(encrypt(originalTextToCode.getText().toString(), Integer.parseInt(codingKey.getText().toString())));
+                    } else {
+                        Toast.makeText(getActivity(), "Key is empty!", Toast.LENGTH_SHORT).show();
+                        codedText.setText("");
+                    }
                 } else {
+                    Toast.makeText(getActivity(), "Text To Code is empty!", Toast.LENGTH_SHORT).show();
                     codedText.setText("");
                 }
             }
@@ -150,9 +159,15 @@ public class CesarFragment extends Fragment {
         decodifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!decodingKey.getText().toString().isEmpty()) {
-                    decodedText.setText(decrypt(originalTextToDecode.getText().toString(), Integer.parseInt(decodingKey.getText().toString())));
+                if (!originalTextToDecode.getText().toString().isEmpty()) {
+                    if (!decodingKey.getText().toString().isEmpty()) {
+                        decodedText.setText(decrypt(originalTextToDecode.getText().toString(), Integer.parseInt(decodingKey.getText().toString())));
+                    } else {
+                        Toast.makeText(getActivity(), "Key is empty!", Toast.LENGTH_SHORT).show();
+                        decodedText.setText("");
+                    }
                 } else {
+                    Toast.makeText(getActivity(), "Text to deCode is empty!", Toast.LENGTH_SHORT).show();
                     decodedText.setText("");
                 }
             }

@@ -24,14 +24,14 @@ public class VegenereFragment extends Fragment {
             'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
             'u', 'v', 'w', 'x', 'y', 'z'};
     private final static char[][] charactersTable = new char[26][26];
-    Button codifyButton;
-    EditText originalTextToCode;
-    EditText codingKey;
-    TextView codedText;
-    Button decodifyButton;
-    EditText originalTextToDecode;
-    EditText decodingKey;
-    TextView decodedText;
+    private Button codifyButton;
+    private EditText originalTextToCode;
+    private EditText codingKey;
+    private TextView codedText;
+    private Button decodifyButton;
+    private EditText originalTextToDecode;
+    private EditText decodingKey;
+    private TextView decodedText;
 
     public VegenereFragment() {
         super();
@@ -39,9 +39,9 @@ public class VegenereFragment extends Fragment {
     }
 
     public static void setCharactersTable() {
-        for (int i=0; i < 26; i++){
-            for (int j=0; j<26; j++){
-                charactersTable[i][j]=charactersArray[(j+i)%26];
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < 26; j++) {
+                charactersTable[i][j] = charactersArray[(j + i) % 26];
             }
         }
     }
@@ -53,14 +53,14 @@ public class VegenereFragment extends Fragment {
         boolean keyCharacterFound = false;
 
         do {
-            if (keyCharacter == charactersArray[j]) {
+            if (keyCharacter == charactersArray[i]) {
                 keyCharacterFound = true;
             } else i++;
 
         } while (!keyCharacterFound && i < charactersArray.length);
 
         do {
-            if (textCharacter == charactersArray[i]) {
+            if (textCharacter == charactersArray[j]) {
                 textCharacterFound = true;
             } else j++;
 
@@ -72,6 +72,7 @@ public class VegenereFragment extends Fragment {
             return '\u0000';
         }
     }
+
     private static char decodify(char codedCharacter, char keyCharacter) {
         int i = 0;
         int j = 0;
@@ -79,17 +80,18 @@ public class VegenereFragment extends Fragment {
         boolean keyCharacterFound = false;
 
         do {
-            if (keyCharacter == charactersArray[j]) {
+            if (keyCharacter == charactersArray[i]) {
                 keyCharacterFound = true;
             } else i++;
 
         } while (!keyCharacterFound && i < charactersArray.length);
 
-        for (j=0; j < 26 || !codedCharacterFound; j++) {
-            if (charactersTable[i][j] == keyCharacter) {
+
+        do {
+            if (charactersTable[i][j] == codedCharacter) {
                 codedCharacterFound = true;
-            }
-        }
+            } else j++;
+        } while (!codedCharacterFound && j < charactersArray.length);
 
         if (codedCharacterFound && keyCharacterFound) {
             return charactersArray[j];
@@ -98,9 +100,10 @@ public class VegenereFragment extends Fragment {
         }
     }
 
-    private static String encrypt(String text, final String key) {
+    private static String encrypt(String text, String key) {
         String codedText = "";
         text = text.toLowerCase();
+        key = key.toLowerCase();
 
         if (text.isEmpty()) {
             return text;
@@ -125,13 +128,13 @@ public class VegenereFragment extends Fragment {
         for (int index = 0; index < text.length(); index++) {
             char textCharacter = text.charAt(index);
             boolean validTextCharacter = false;
-            for (int i = 0; i < charactersArray.length && !validTextCharacter; i++){
+            for (int i = 0; i < charactersArray.length && !validTextCharacter; i++) {
                 if (textCharacter == charactersArray[i]) {
                     validTextCharacter = true;
                 }
             }
 
-            if (validTextCharacter){
+            if (validTextCharacter) {
                 codedText += (codify(textCharacter, key.charAt(index % key.length())));
             } else {
                 codedText += textCharacter;
@@ -140,7 +143,7 @@ public class VegenereFragment extends Fragment {
         return codedText;
     }
 
-    static String decrypt(String text, final String key) {
+    private static String decrypt(String text, final String key) {
         String decodedText = "";
         text = text.toLowerCase();
 
@@ -167,13 +170,13 @@ public class VegenereFragment extends Fragment {
         for (int index = 0; index < text.length(); index++) {
             char textCharacter = text.charAt(index);
             boolean validTextCharacter = false;
-            for (int i = 0; i < charactersArray.length && !validTextCharacter; i++){
+            for (int i = 0; i < charactersArray.length && !validTextCharacter; i++) {
                 if (textCharacter == charactersArray[i]) {
                     validTextCharacter = true;
                 }
             }
 
-            if (validTextCharacter){
+            if (validTextCharacter) {
                 decodedText += (decodify(textCharacter, key.charAt(index % key.length())));
             } else {
                 decodedText += textCharacter;
@@ -207,23 +210,36 @@ public class VegenereFragment extends Fragment {
         codifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String encryptedText = encrypt(originalTextToCode.getText().toString(), codingKey.getText().toString());
-                if (encryptedText == null) {
-                    Toast.makeText(getActivity(),"Invalid",Toast.LENGTH_SHORT).show();
+                if (!originalTextToCode.getText().toString().isEmpty()) {
+                    if (!codingKey.getText().toString().isEmpty()) {
+                        codedText.setText(encrypt(originalTextToCode.getText().toString(), codingKey.getText().toString()));
+                    } else {
+                        Toast.makeText(getActivity(), "Key is empty!", Toast.LENGTH_SHORT).show();
+                        codedText.setText("");
+                    }
                 } else {
-                    codedText.setText(encryptedText);
+                    Toast.makeText(getActivity(), "Text To Code is empty!", Toast.LENGTH_SHORT).show();
+                    codedText.setText("");
                 }
+
+
             }
         });
 
         decodifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String decryptedText = decrypt(originalTextToDecode.getText().toString(), decodingKey.getText().toString());
-                if (decryptedText == null) {
-                    Toast.makeText(getActivity(),"Invalid",Toast.LENGTH_SHORT).show();
+
+                if (!originalTextToDecode.getText().toString().isEmpty()) {
+                    if (!decodingKey.getText().toString().isEmpty()) {
+                        decodedText.setText(decrypt(originalTextToDecode.getText().toString(), decodingKey.getText().toString()));
+                    } else {
+                        Toast.makeText(getActivity(), "Key is empty!", Toast.LENGTH_SHORT).show();
+                        decodedText.setText("");
+                    }
                 } else {
-                    decodedText.setText(decryptedText);
+                    Toast.makeText(getActivity(), "Text to deCode is empty!", Toast.LENGTH_SHORT).show();
+                    decodedText.setText("");
                 }
             }
         });
